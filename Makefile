@@ -24,5 +24,21 @@ job-external-variable:
 job-external-parameter: 
 	@echo ${param-key}
 
+# EXTERNAL_PASSWORD needs to be exported
+job-conditionals:
+ifeq ($(DB_TYPE),mysql)
+	@echo "Cleaning mysql datasource"
+	@$(eval PASS := $(EXTERNAL_PASSWORD))
+	@echo "External variable=${EXTERNAL_PASSWORD}"
+	@echo "Local variable=${PASS}"
+endif
+
+ifeq ($(DB_TYPE),postgres)
+	@echo "Cleaning postgress datasource"
+	@$(eval PASS := $(EXTERNAL_PASSWORD))
+	@echo "External variable=${EXTERNAL_PASSWORD}"
+	@echo "Local variable=${PASS}"
+endif
+
 job-local-variable: 
 	@echo ${LOCAL_VARIABLE}
